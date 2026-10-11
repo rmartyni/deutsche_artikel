@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verkehrsmittel: der, die, das?</title>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/quiz.css">
+</head>
+<body>
+
+<main class="app" data-quiz="verkehrsmittel">
+  <header>
+    <h1><span class="der">Der</span>, <span class="die">die</span>, <span class="das">das</span>?</h1>
+    <div class="stats" aria-live="polite">
+      <span>Punkte <b id="score">0 / 0</b></span>
+      <span>Serie <b id="streak">0</b></span>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <nav class="sets" id="sets" aria-label="Runde wählen"></nav>
+    <div class="options">
+      <label class="toggle" for="hints">
+        <input type="checkbox" id="hints" role="switch" checked>
+        Bild und Übersetzung
+      </label>
+      <div class="langs" id="langs" role="group" aria-label="Sprache der Übersetzung">
+        <button type="button" id="lang-pl" data-lang="pl">PL</button>
+        <button type="button" id="lang-en" data-lang="en">EN</button>
+      </div>
+    </div>
+  </div>
+
+  <section id="quiz">
+    <div class="quiz-body">
+      <div class="sign">
+        <div class="sign-inner">
+          <div class="pic" id="pic" aria-hidden="true"></div>
+          <div class="noun" id="noun" lang="de"></div>
+          <div class="gloss" id="gloss"></div>
+        </div>
+      </div>
+
+      <div class="feedback" id="feedback" aria-live="polite">
+        <span class="hint">Wähle den Artikel<span class="kbd-only"> oder drücke 1, 2 oder 3</span>.</span>
+      </div>
+
+      <div class="answers" id="answers">
+        <button type="button" id="btn-der" data-a="der">der</button>
+        <button type="button" id="btn-die" data-a="die">die</button>
+        <button type="button" id="btn-das" data-a="das">das</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="summary" id="summary" hidden>
+    <h2 id="summary-title">Ende</h2>
+    <div id="summary-body"></div>
+    <div><button type="button" class="btn" id="btn-restart">Noch einmal</button></div>
+  </section>
+
+  <div class="progress" aria-hidden="true"><span id="bar"></span></div>
+  <footer>
+    <span id="round-info"></span>
+    <span class="kbd-only">Enter: weiter</span>
+  </footer>
+</main>
+
+<script src="js/verkehrsmittel.js"></script>
+<script src="js/quiz.js"></script>
+</body>
+</html>

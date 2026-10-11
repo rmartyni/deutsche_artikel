@@ -1,0 +1,63 @@
+/* Shared by all pages: colours (light and dark theme), fonts,
+   page layout and basic behaviour. */
+
+:root {
+  --bg: #eceff1;
+  --surface: #ffffff;
+  --fg: #1d2429;
+  --muted: #5d6970;
+  --line: #d3d9dd;
+  --sign: #6e4527;
+  --sign-fg: #ffffff;
+  --der: #1f5fae;
+  --die: #c0362c;
+  --das: #23803f;
+  --ok-bg: #e3f2e7;
+  --bad-bg: #fbe5e3;
+  --font-sign: "Barlow Semi Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Barlow", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161b1f; --surface: #20272c; --fg: #e8ecee; --muted: #9aa6ad; --line: #34404a;
+    --sign: #7a4d2c; --sign-fg: #fff8f0;
+    --der: #6ea8f0; --die: #f07a6e; --das: #63c47f;
+    --ok-bg: #1d3424; --bad-bg: #3d2220;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161b1f; --surface: #20272c; --fg: #e8ecee; --muted: #9aa6ad; --line: #34404a;
+  --sign: #7a4d2c; --sign-fg: #fff8f0;
+  --der: #6ea8f0; --die: #f07a6e; --das: #63c47f;
+  --ok-bg: #1d3424; --bad-bg: #3d2220;
+  color-scheme: dark;
+}
+
+html, body { height: 100%; }
+[hidden] { display: none !important; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  padding-inline: 16px;
+  padding-block: 24px;
+  box-sizing: border-box;
+}
+.app {
+  max-width: 32rem;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+a:focus-visible,
+button:focus-visible { outline: 3px solid var(--der); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

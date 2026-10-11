@@ -1,0 +1,84 @@
+/* Start page */
+
+.app { gap: 24px; }
+
+h1 {
+  font-family: var(--font-sign);
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.1;
+  margin: 0;
+  text-wrap: balance;
+}
+.lead { margin: 4px 0 0; color: var(--muted); }
+
+.exercises {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* An exercise link looks like the brown sign on the quiz page. */
+.exercise {
+  display: block;
+  background: var(--sign);
+  color: var(--sign-fg);
+  border-radius: 10px;
+  padding: 6px;
+  text-decoration: none;
+  touch-action: manipulation;
+}
+.exercise-inner {
+  border: 2px solid var(--sign-fg);
+  border-radius: 6px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.exercise .pic {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  font-size: 2.4rem;
+  line-height: 1;
+}
+.exercise .text { min-width: 0; display: flex; flex-direction: column; }
+.exercise .name {
+  font-family: var(--font-sign);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.1;
+}
+.exercise .meta { font-size: 0.95rem; opacity: 0.85; }
+.exercise .arrow {
+  margin-left: auto;
+  font-family: var(--font-sign);
+  font-size: 1.8rem;
+  line-height: 1;
+}
+@media (hover: hover) {
+  .exercise:hover .exercise-inner { background: rgba(255, 255, 255, 0.08); }
+}
+.exercise:focus-visible { outline: 3px solid var(--der); outline-offset: 3px; }
+
+.legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.legend b { font-family: var(--font-sign); font-size: 1.05rem; }
+.legend .der { color: var(--der); }
+.legend .die { color: var(--die); }
+.legend .das { color: var(--das); }
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.site-footer a { color: inherit; }
