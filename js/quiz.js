@@ -48,6 +48,7 @@
   let locked = false;
   let nextTimer = null;
   let last = null;
+  let view = "quiz"; // "quiz" or "list"
 
   function shuffle(list) {
     const a = [...list];
@@ -86,6 +87,7 @@
     $("streak").textContent = "0";
     renderSets();
     newRound();
+    renderWordList();
   }
 
   function newRound() {
@@ -231,6 +233,69 @@
     $("btn-restart").focus();
   }
 
+  // Every noun of the selected round, grouped by article (der, die, das),
+  // alphabetically within each group, article in its colour.
+  function renderWordList() {
+    const r = OPTIONS[round];
+    $("wordlist-title").textContent = `${r.name} · ${r.words.length} Wörter`;
+    const container = $("words");
+    container.innerHTML = "";
+    for (const a of ["der", "die", "das"]) {
+      const words = r.words
+        .filter((w) => w.a === a)
+        .sort((x, y) => x.n.localeCompare(y.n, "de"));
+      if (!words.length) continue;
+
+      const group = document.createElement("section");
+      group.className = `group ${a}`;
+      const title = document.createElement("h3");
+      title.className = `group-title ${a}`;
+      title.innerHTML = `${a} <span class="count">${words.length}</span>`;
+      const list = document.createElement("ul");
+      list.className = "words";
+      group.append(title, list);
+      container.append(group);
+      renderWords(list, words);
+    }
+  }
+
+  function renderWords(list, words) {
+    for (const w of words) {
+      const li = document.createElement("li");
+
+      const pic = document.createElement("span");
+      pic.className = "word-pic";
+      pic.setAttribute("aria-hidden", "true");
+      pic.textContent = w.e || "";
+
+      const word = document.createElement("span");
+      word.className = "word";
+      word.lang = "de";
+      const art = document.createElement("b");
+      art.className = `article ${w.a}`;
+      art.textContent = w.a;
+      word.append(art, ` ${w.n}`);
+
+      const tr = document.createElement("span");
+      tr.className = "word-tr";
+      tr.lang = lang;
+      tr.textContent = w[lang] || "";
+
+      li.append(pic, word, tr);
+      list.append(li);
+    }
+  }
+
+  function setView(v) {
+    view = v;
+    $("practice").hidden = v !== "quiz";
+    $("wordlist").hidden = v !== "list";
+    for (const b of document.querySelectorAll(".views button")) {
+      b.setAttribute("aria-pressed", String(b.dataset.view === v));
+    }
+    if (v === "list") renderWordList();
+  }
+
   for (const b of buttons) b.addEventListener("click", () => answer(b.dataset.a));
   $("btn-restart").addEventListener("click", newRound);
   $("hints").addEventListener("change", (e) => {
@@ -244,13 +309,17 @@
       try { localStorage.setItem("lang", lang); } catch (err) {}
       renderLangs();
       if (deck[pos]) renderGloss(deck[pos]);
+      if (view === "list") renderWordList();
     });
+  }
+  for (const b of document.querySelectorAll(".views button")) {
+    b.addEventListener("click", () => setView(b.dataset.view));
   }
   renderLangs();
   renderSets();
 
   document.addEventListener("keydown", (e) => {
-    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    if (e.altKey || e.ctrlKey || e.metaKey || view !== "quiz") return;
     const map = { "1": "der", "2": "die", "3": "das" };
     if (!$("quiz").hidden && map[e.key]) {
       e.preventDefault();

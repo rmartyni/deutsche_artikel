@@ -290,3 +290,125 @@ footer {
 }
 .langs button + button { border-left: 1px solid var(--line); }
 .langs button[aria-pressed="true"] { background: var(--sign); color: var(--sign-fg); }
+
+/* Practice / word list switch. */
+.views {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.views button {
+  flex: 1;
+  font: inherit;
+  font-family: var(--font-sign);
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 8px 12px;
+  border: 0;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.views button + button { border-left: 1px solid var(--line); }
+.views button[aria-pressed="true"] { background: var(--sign); color: var(--sign-fg); }
+
+#practice {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Word list: one noun per row, article in the learner colour. */
+.wordlist {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.wordlist h2 {
+  font-family: var(--font-sign);
+  font-size: 1.3rem;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.group {
+  --c: var(--fg);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.group.der { --c: var(--der); }
+.group.die { --c: var(--die); }
+.group.das { --c: var(--das); }
+.group-title {
+  margin: 0;
+  font-family: var(--font-sign);
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--c);
+}
+.group-title .count {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.group .words { border-top: 3px solid var(--c); }
+
+.words {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.words li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 8px 14px;
+}
+.words li + li { border-top: 1px solid var(--line); }
+.word-pic {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  font-size: 1.3rem;
+  width: 1.6rem;
+  flex: none;
+  text-align: center;
+}
+.word {
+  font-family: var(--font-sign);
+  font-weight: 600;
+  font-size: 1.25rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+.word .article {
+  display: inline-block;
+  min-width: 2.4em;
+  font-weight: 700;
+}
+.word .article.der { color: var(--der); }
+.word .article.die { color: var(--die); }
+.word .article.das { color: var(--das); }
+.word-tr {
+  margin-left: auto;
+  text-align: right;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* Narrow screens: translation under the noun instead of beside it. */
+@media (max-width: 26rem) {
+  .words li { flex-wrap: wrap; }
+  .word-tr { flex-basis: 100%; margin-left: calc(1.6rem + 12px); text-align: left; }
+}
