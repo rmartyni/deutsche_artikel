@@ -47,6 +47,7 @@
   let mistakes = new Map();
   let locked = false;
   let nextTimer = null;
+  let fixing = null; // after a mistake: the article that must be chosen to go on
   let last = null;
   let view = "quiz"; // "quiz" or "list"
 
@@ -119,6 +120,7 @@
   function show() {
     const w = deck[pos];
     locked = false;
+    fixing = null;
     $("pic").textContent = w.e;
     $("pic").hidden = !w.e;
     $("noun").textContent = w.n;
@@ -135,7 +137,11 @@
   }
 
   function answer(choice) {
-    if (locked) return;
+    if (locked) {
+      // After a mistake only the correct article moves on to the next word.
+      if (fixing && choice === fixing) next();
+      return;
+    }
     locked = true;
     const w = deck[pos];
     const ok = choice === w.a;
@@ -160,23 +166,16 @@
       streak++;
       fb.className = "feedback ok";
       fb.textContent = `Richtig: ${w.a} ${w.n}`;
-      nextTimer = setTimeout(next, 1100);
+      nextTimer = setTimeout(next, 600);
     } else {
       streak = 0;
       mistakes.set(w, (mistakes.get(w) || 0) + 1);
       requeue(w);
+      // The correct article stays clickable; pressing it moves on.
+      fixing = w.a;
+      for (const b of buttons) b.disabled = b.dataset.a !== w.a;
       fb.className = "feedback bad";
-      fb.innerHTML = "";
-      const msg = document.createElement("span");
-      msg.textContent = `Falsch. Richtig ist: ${w.a} ${w.n}. Das Wort kommt noch zweimal.`;
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "btn";
-      btn.id = "btn-next";
-      btn.textContent = "Weiter";
-      btn.addEventListener("click", next);
-      fb.append(msg, btn);
-      btn.focus();
+      fb.textContent = `Falsch. Richtig ist: ${w.a} ${w.n}. Drücke „${w.a}“, um weiterzumachen. Das Wort kommt noch zweimal.`;
     }
     last = w;
     $("score").textContent = `${correct} / ${answered}`;
@@ -198,6 +197,7 @@
   function next() {
     if (!locked) return;
     clearTimeout(nextTimer);
+    fixing = null;
     pos++;
     if (pos < deck.length) show();
     else finishRound();
@@ -324,7 +324,7 @@
     if (!$("quiz").hidden && map[e.key]) {
       e.preventDefault();
       answer(map[e.key]);
-    } else if (e.key === "Enter" && !$("quiz").hidden && locked) {
+    } else if (e.key === "Enter" && !$("quiz").hidden && locked && !fixing) {
       e.preventDefault();
       next();
     }
