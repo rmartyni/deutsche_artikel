@@ -99,6 +99,7 @@ window.QUIZZES.orte = {
         { a: "der", n: "Boden", pl: "podłoga", en: "floor", e: "" },
         { a: "das", n: "Dach", pl: "dach", en: "roof", e: "" },
         { a: "der", n: "Dachboden", pl: "strych", en: "attic, loft", e: "🧳" },
+        { a: "das", n: "Dachgeschoss", pl: "poddasze (piętro)", en: "top floor, loft", e: "" },
         { a: "die", n: "Decke", pl: "sufit (także: koc)", en: "ceiling (also: blanket)", e: "" },
         { a: "der", n: "Eingang", pl: "wejście", en: "entrance", e: "🚪" },
         { a: "das", n: "Erdgeschoss", pl: "parter", en: "ground floor", e: "0️⃣" },
